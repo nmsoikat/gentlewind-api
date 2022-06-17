@@ -23,6 +23,24 @@ const messageRouter = require('./routes/messageRouter');
 
 // APP
 const app = express();
+app.set("trust proxy", 1);
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET || 'Super Secret (change it)',
+    resave: true,
+    saveUninitialized: false,
+    cookie: {
+      sameSite: process.env.NODE_ENV === "production" ? 'none' : 'lax', // must be 'none' to enable cross-site delivery
+      secure: process.env.NODE_ENV === "production", // must be true if sameSite='none'
+    }
+  })
+);
+app.use(
+  cors({
+    credentials: true,
+    origin: [process.env.FRONTEND_APP_URL]
+  })
+);
 
 // const http = require('http')
 // const server = http.createServer(app)
@@ -71,10 +89,10 @@ app.use('/images', express.static(path.join(__dirname, "/public/images")))
 // }
 // app.use(cors(corsOptions))
 // app.use(cors())
-app.use(cors({
-  origin: 'https://gentlewind.netlify.app',
-  credentials: true
-}))
+// app.use(cors({
+//   origin: 'https://gentlewind.netlify.app',
+//   credentials: true
+// }))
 
 app.use(express.json()) // body parser
 app.use(express.urlencoded({ extended: true }));
