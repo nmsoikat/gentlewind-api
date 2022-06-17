@@ -59,20 +59,20 @@ app.use('/images', express.static(path.join(__dirname, "/public/images")))
 // MIDDLEWARE
 // let whitelist = ['http://localhost:3000'];
 // let whitelist = ['https://gentle-wind.herokuapp.com'];
-let whitelist = ['https://gentlewind.netlify.app', 'https://gentlewind-socket.herokuapp.com'];
-let corsOptions = {
-  origin: (origin, callback) => {
-    if (whitelist.indexOf(origin) !== -1) {
-      callback(null, true)
-    } else {
-      callback(new Error('Not allowed by CORS'))
-    }
-  }, credentials: true
-}
+// let whitelist = ['https://gentlewind.netlify.app', 'https://gentlewind-socket.herokuapp.com'];
+// let corsOptions = {
+//   origin: (origin, callback) => {
+//     if (whitelist.indexOf(origin) !== -1) {
+//       callback(null, true)
+//     } else {
+//       callback(new Error('Not allowed by CORS'))
+//     }
+//   }, credentials: true
+// }
 // app.use(cors(corsOptions))
 // app.use(cors())
 app.use(cors({
-  origin: origin,
+  origin: 'https://gentlewind.netlify.app',
   credentials: true
 }))
 
